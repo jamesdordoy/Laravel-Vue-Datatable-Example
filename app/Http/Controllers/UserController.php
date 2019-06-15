@@ -15,7 +15,15 @@ class UserController extends Controller
         $dir = $request->input('dir', 'asc');
         $searchValue = $request->input('search');
 
-        $data = User::dataTableQuery($column, $dir, $length, $searchValue);
+        $isAdmin = $request->input('isAdmin');
+
+        $query = User::dataTableQuery($column, $dir, $searchValue);
+        
+        if (isset($isAdmin) && ! empty($isAdmin)) {
+            $query->where("type", $isAdmin);
+        }
+            
+        $data = $query->paginate($length);
 
         return new DataTableCollectionResource($data);
     }

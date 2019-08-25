@@ -2,7 +2,8 @@
     <data-table
         url="/users"
         :per-page="perPage"
-        :columns="columns">
+        :columns="columns"
+        :add-filters-to-url="true">
     </data-table>
 </template>
 
@@ -17,6 +18,9 @@
                         label: 'ID',
                         name: 'id',
                         filterable: true,
+                        meta: {
+                            hello: "World"
+                        }
                     },
                     {
                         label: 'Name',

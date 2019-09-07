@@ -15,7 +15,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get
-('/users', [
+Route::get('/users', [
     'uses' => 'UserController@index',
 ]);

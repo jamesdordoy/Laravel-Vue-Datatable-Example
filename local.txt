@@ -1,0 +1,9 @@
+"repositories": [
+    {
+        "type": "path",
+        "url": "../laravel-vue-datatable",
+        "options": {
+            "symlink": true
+        }
+    }
+],

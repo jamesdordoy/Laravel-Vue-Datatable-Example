@@ -12,6 +12,14 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::get('/eloquent', [
+    'uses' => 'UserController@index',
+]);
+
+Route::get('/query-builder', [
+    'uses' => 'UserController@queryBuilder',
+]);
+
+Route::get('/eloquent/search', [
+    'uses' => 'UserController@search',
+]);

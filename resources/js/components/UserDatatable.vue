@@ -1,9 +1,8 @@
 <template>
     <data-table
-        url="/users"
-        :per-page="perPage"
-        :columns="columns"
-        :add-filters-to-url="true">
+        url="/api/query-builder"
+        order-dir="desc"
+        :columns="columns">
     </data-table>
 </template>
 
@@ -12,24 +11,32 @@
         name: 'app',
         data() {
             return {
-                perPage: ['10', '25', '50'],
                 columns: [
                     {
                         label: 'ID',
                         name: 'id',
                         filterable: true,
-                        meta: {
-                            hello: "World"
-                        }
                     },
                     {
                         label: 'Name',
-                        name: 'name',
+                        name: 'user_name',
+                        columnName: 'users.name',
                         filterable: true,
                     },
                     {
                         label: 'Email',
                         name: 'email',
+                        filterable: true,
+                    },
+                    {
+                        label: 'Cost',
+                        name: 'cost',
+                        filterable: true,
+                    },
+                    {
+                        label: 'Role',
+                        name: 'role_name',
+                        columnName: 'roles.name',
                         filterable: true,
                     },
                 ]

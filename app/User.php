@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use JamesDordoy\LaravelVueDatatable\Traits\LaravelVueDatatableTrait;
 
@@ -20,7 +21,17 @@ class User extends Authenticatable
         ],
         'email' => [
             'searchable' => true,
+        ],
+        'is_active' => [
+            'searchable' => true,
+        ],
+        'cost' => [
+            'searchable' => true,
         ]
+    ];
+
+    protected $dataTableJoins = [
+        "roles"
     ];
 
     /**
@@ -49,4 +60,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function role() : BelongsTo
+    {
+        return $this->belongsTo(\App\Role::class);
+    }
 }

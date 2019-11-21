@@ -12,17 +12,27 @@
         "barryvdh/laravel-cors": "^0.11.3",
         "facade/ignition": "^1.4",
         "fideloper/proxy": "^4.0",
-        "jamesdordoy/laravelvuedatatable": "^1.1",
         "laravel/framework": "6.0.*",
         "laravel/tinker": "^1.0"
     },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../laravel-vue-datatable",
+            "options": {
+                "symlink": true
+            }
+        }
+    ],
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",
         "filp/whoops": "^2.0",
         "fzaninotto/faker": "^1.4",
+        "laravel/ui": "^1.0",
         "mockery/mockery": "^1.0",
         "nunomaduro/collision": "^3.0",
-        "phpunit/phpunit": "^7.5"
+        "phpunit/phpunit": "^7.5",
+        "jamesdordoy/laravelvuedatatable": "@dev"
     },
     "config": {
         "optimize-autoloader": true,

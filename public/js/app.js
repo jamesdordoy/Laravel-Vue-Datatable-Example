@@ -1729,6 +1729,14 @@ function (modules) {
   },
 
   /***/
+  "2621":
+  /***/
+  function _(module, exports) {
+    exports.f = Object.getOwnPropertySymbols;
+    /***/
+  },
+
+  /***/
   "28a5":
   /***/
   function a5(module, exports, __webpack_require__) {
@@ -4841,6 +4849,63 @@ function (modules) {
     })["default"];
     /***/
 
+  },
+
+  /***/
+  "7333":
+  /***/
+  function _(module, exports, __webpack_require__) {
+    "use strict"; // 19.1.2.1 Object.assign(target, source, ...)
+
+    var DESCRIPTORS = __webpack_require__("9e1e");
+
+    var getKeys = __webpack_require__("0d58");
+
+    var gOPS = __webpack_require__("2621");
+
+    var pIE = __webpack_require__("52a7");
+
+    var toObject = __webpack_require__("4bf8");
+
+    var IObject = __webpack_require__("626a");
+
+    var $assign = Object.assign; // should work with symbols and should have deterministic property order (V8 bug)
+
+    module.exports = !$assign || __webpack_require__("79e5")(function () {
+      var A = {};
+      var B = {}; // eslint-disable-next-line no-undef
+
+      var S = Symbol();
+      var K = 'abcdefghijklmnopqrst';
+      A[S] = 7;
+      K.split('').forEach(function (k) {
+        B[k] = k;
+      });
+      return $assign({}, A)[S] != 7 || Object.keys($assign({}, B)).join('') != K;
+    }) ? function assign(target, source) {
+      // eslint-disable-line no-unused-vars
+      var T = toObject(target);
+      var aLen = arguments.length;
+      var index = 1;
+      var getSymbols = gOPS.f;
+      var isEnum = pIE.f;
+
+      while (aLen > index) {
+        var S = IObject(arguments[index++]);
+        var keys = getSymbols ? getKeys(S).concat(getSymbols(S)) : getKeys(S);
+        var length = keys.length;
+        var j = 0;
+        var key;
+
+        while (length > j) {
+          key = keys[j++];
+          if (!DESCRIPTORS || isEnum.call(S, key)) T[key] = S[key];
+        }
+      }
+
+      return T;
+    } : $assign;
+    /***/
   },
 
   /***/
@@ -8181,6 +8246,19 @@ function (modules) {
   },
 
   /***/
+  "f751":
+  /***/
+  function f751(module, exports, __webpack_require__) {
+    // 19.1.3.1 Object.assign(target, source)
+    var $export = __webpack_require__("5ca1");
+
+    $export($export.S + $export.F, 'Object', {
+      assign: __webpack_require__("7333")
+    });
+    /***/
+  },
+
+  /***/
   "f772":
   /***/
   function f772(module, exports) {
@@ -8260,9 +8338,9 @@ function (modules) {
     /* harmony default export */
 
 
-    var setPublicPath = null; // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"700ae7aa-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/DataTable.vue?vue&type=template&id=057ae21c&
+    var setPublicPath = null; // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"700ae7aa-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/DataTable.vue?vue&type=template&id=6192c0cb&
 
-    var DataTablevue_type_template_id_057ae21c_render = function DataTablevue_type_template_id_057ae21c_render() {
+    var DataTablevue_type_template_id_6192c0cb_render = function DataTablevue_type_template_id_6192c0cb_render() {
       var _vm = this;
 
       var _h = _vm.$createElement;
@@ -8345,8 +8423,11 @@ function (modules) {
       }, [_vm._v("Next")])])], 2);
     };
 
-    var staticRenderFns = []; // CONCATENATED MODULE: ./src/components/DataTable.vue?vue&type=template&id=057ae21c&
-    // EXTERNAL MODULE: ./node_modules/core-js/modules/es6.number.constructor.js
+    var staticRenderFns = []; // CONCATENATED MODULE: ./src/components/DataTable.vue?vue&type=template&id=6192c0cb&
+    // EXTERNAL MODULE: ./node_modules/core-js/modules/es6.object.assign.js
+
+    var es6_object_assign = __webpack_require__("f751"); // EXTERNAL MODULE: ./node_modules/core-js/modules/es6.number.constructor.js
+
 
     var es6_number_constructor = __webpack_require__("c5f6"); // EXTERNAL MODULE: ./node_modules/core-js/modules/es6.number.is-integer.js
 
@@ -8354,13 +8435,13 @@ function (modules) {
     var es6_number_is_integer = __webpack_require__("7cdf"); // EXTERNAL MODULE: ./node_modules/core-js/modules/es6.array.find-index.js
 
 
-    var es6_array_find_index = __webpack_require__("20d6"); // EXTERNAL MODULE: ./node_modules/core-js/modules/web.dom.iterable.js
+    var es6_array_find_index = __webpack_require__("20d6"); // EXTERNAL MODULE: ./node_modules/core-js/modules/es6.function.name.js
 
 
-    var web_dom_iterable = __webpack_require__("ac6a"); // EXTERNAL MODULE: ./node_modules/core-js/modules/es6.function.name.js
+    var es6_function_name = __webpack_require__("7f7f"); // EXTERNAL MODULE: ./node_modules/core-js/modules/web.dom.iterable.js
 
 
-    var es6_function_name = __webpack_require__("7f7f"); // EXTERNAL MODULE: ./node_modules/axios/index.js
+    var web_dom_iterable = __webpack_require__("ac6a"); // EXTERNAL MODULE: ./node_modules/axios/index.js
 
 
     var axios = __webpack_require__("bc3a");
@@ -9279,12 +9360,6 @@ function (modules) {
         } else {
           this.getData();
         }
-
-        if (this.columns.length) {
-          this.internalOrderBy = this.orderBy.length ? this.orderBy : this.columns[0].name;
-        } else {
-          this.internalOrderBy = 'id';
-        }
       },
       mounted: function mounted() {
         var _this = this;
@@ -9321,11 +9396,10 @@ function (modules) {
           tableData: {
             length: this.perPage[0],
             search: '',
-            column: this.internalOrderBy,
+            column: this.orderBy,
             dir: this.orderDir,
             filters: this.filters
-          },
-          internalOrderBy: 'id'
+          }
         };
       },
       props: {
@@ -9356,7 +9430,7 @@ function (modules) {
         },
         orderBy: {
           type: String,
-          "default": ''
+          "default": 'id'
         },
         classes: {
           type: Object,
@@ -9491,7 +9565,7 @@ function (modules) {
 
     /* normalize component */
 
-    var DataTable_component = normalizeComponent(components_DataTablevue_type_script_lang_js_, DataTablevue_type_template_id_057ae21c_render, staticRenderFns, false, null, null, null);
+    var DataTable_component = normalizeComponent(components_DataTablevue_type_script_lang_js_, DataTablevue_type_template_id_6192c0cb_render, staticRenderFns, false, null, null, null);
     /* harmony default export */
 
     var DataTable = DataTable_component.exports; // CONCATENATED MODULE: ./src/plugin.js
@@ -11146,7 +11220,6 @@ module.exports = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
 //
 //
 //
@@ -46494,11 +46567,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("data-table", {
-    attrs: {
-      url: "/api/query-builder",
-      "order-dir": "desc",
-      columns: _vm.columns
-    }
+    attrs: { url: "/api/query-builder", columns: _vm.columns }
   })
 }
 var staticRenderFns = []

@@ -1,7 +1,6 @@
 <template>
     <data-table
         url="/api/query-builder"
-        order-dir="desc"
         :columns="columns">
     </data-table>
 </template>

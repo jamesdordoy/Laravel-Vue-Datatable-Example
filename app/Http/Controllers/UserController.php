@@ -9,35 +9,33 @@ use JamesDordoy\LaravelVueDatatable\Http\Resources\DataTableCollectionResource;
 class UserController extends Controller
 {
     public function index(Request $request)
-    {   
-        $length = $request->input('length');
-        $column = $request->input('column');
-        $dir = $request->input('dir');
-        $searchValue = $request->input('search');
-
-        $query = User::eloquentQuery($column, $dir, $searchValue);
+    {
+        $query = User::eloquentQuery(
+            $request->input('column'),
+            $request->input('dir'),
+            $request->input('search')
+        );
 
         $isAdmin = $request->input('isAdmin');
         
         if (isset($isAdmin) && ! empty($isAdmin)) {
             $query->where("type", $isAdmin);
         }
-
-        $query = $query->with("role");
         
-        $data = $query->paginate($length);
+        $data = $query->with("role")->paginate($request->input('length'));
 
         return new DataTableCollectionResource($data);
     }
 
     public function queryBuilder(Request $request)
     {
-        $length = $request->input('length');
-        $column = $request->input('column', 'id');
-        $dir = $request->input('dir', 'asc');
         $searchValue = $request->input('search');
 
-        $query = User::queryBuilderQuery($column, $dir, $searchValue);
+        $query = User::queryBuilderQuery(
+            $request->input('column'),
+            $request->input('dir'),
+            $searchValue
+        );
 
         $query
             ->join('roles', 'roles.id', '=', 'users.role_id')
@@ -59,21 +57,14 @@ class UserController extends Controller
             $query->where("type", $isAdmin);
         }
         
-        $data = $query->paginate($length);
+        $data = $query->paginate($request->input('length'));
 
         return new DataTableCollectionResource($data);
     }
 
-    /**
-     *
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function search(Request $request) {
+    public function search(Request $request)
+    {
         $searchValue = $request->input('search');
-
-        $users = User::where("name", "like", "%" . $searchValue . "%")->get();
-        
-        return $users;
+        return User::where("name", "like", "%$searchValue%")->get();
     }
 }

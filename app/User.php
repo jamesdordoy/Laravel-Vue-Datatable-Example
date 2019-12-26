@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use JamesDordoy\LaravelVueDatatable\Traits\LaravelVueDatatableTrait;
@@ -64,5 +65,10 @@ class User extends Authenticatable
     public function role() : BelongsTo
     {
         return $this->belongsTo(\App\Role::class);
+    }
+
+    public function roles() : BelongsToMany
+    {
+        return $this->belongsToMany('App\Role', 'role_user', 'user_id', 'role_id');
     }
 }

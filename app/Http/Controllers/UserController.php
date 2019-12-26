@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\Role;
 use Illuminate\Http\Request;
 use JamesDordoy\LaravelVueDatatable\Http\Resources\DataTableCollectionResource;
 
@@ -35,10 +36,7 @@ class UserController extends Controller
             $request->input('column'),
             $request->input('dir'),
             $searchValue
-        );
-
-        $query
-            ->join('roles', 'roles.id', '=', 'users.role_id')
+        )->join('roles', 'roles.id', '=', 'users.role_id')
             ->join('departments', 'departments.id', '=', 'roles.department_id')
             ->select(
                 'roles.name as role_name',
@@ -66,5 +64,38 @@ class UserController extends Controller
     {
         $searchValue = $request->input('search');
         return User::where("name", "like", "%$searchValue%")->get();
+    }
+
+    public function pivot(Request $request)
+    {
+        $searchValue = $request->input('search');
+        $orderBy = $request->input('column', 'id');
+        $orderByDir = $request->input('dir', 'asc');
+        $length = $request->input('length');
+
+        $query = User::eloquentQuery(
+            $orderBy,
+            $orderByDir,
+            $searchValue
+        );
+
+        if ($searchValue) {
+            $query = $query->whereHas('roles', function ($q) use ($searchValue) {
+                $q->orWhere('roles.name', "like",  "%$searchValue%");
+            });
+        }
+        
+        $data = $query->with('roles')->paginate($length);
+
+        return new DataTableCollectionResource($data);
+    }
+
+    public function checkForColumnNesting($column)
+    {
+        if (count(explode(".", $column)) > 1) {
+            return $column;
+        } else {
+            return $this->getTable() . ".$column";
+        }
     }
 }

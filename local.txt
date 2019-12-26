@@ -7,3 +7,5 @@
         }
     }
 ],
+
+"jamesdordoy/laravelvuedatatable": "@dev",

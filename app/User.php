@@ -4,9 +4,6 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use JamesDordoy\LaravelVueDatatable\Traits\LaravelVueDatatableTrait;
 
@@ -51,8 +48,8 @@ class User extends Authenticatable
             ],
         ],
         "hasMany" => [
-            'usernames' => [
-                "model" => \App\Username::class,
+            'telephoneNumbers' => [
+                "model" => \App\TelephoneNumber::class,
                 'foreign_key' => 'user_id',
                 'columns' => [
                     'name' => [
@@ -62,28 +59,28 @@ class User extends Authenticatable
                 ],
             ],
         ],
-        // "belongsToMany" => [
-        //     'roles' => [
-        //         "model" => \App\Role::class,
-        //         "foreign_key" => "role_id",
-        //         "pivot" => [
-        //             "table_name" => "role_user",
-        //             "primary_key" => "id",
-        //             "foreign_key" => "role_id",
-        //             "local_key" => "user_id",
-        //         ],
-        //         "subOrder" => [
-        //             "order_by" => "roles.name",
-        //             "order_dir" => "asc",
-        //         ],
-        //         'columns' => [
-        //             'name' => [
-        //                 'searchable' => true,
-        //                 'orderable' => true,
-        //             ]
-        //         ],
-        //     ],
-        // ]
+        "belongsToMany" => [
+            'departments' => [
+                "model" => \App\Department::class,
+                "foreign_key" => "role_id",
+                "pivot" => [
+                    "table_name" => "department_user",
+                    "primary_key" => "id",
+                    "foreign_key" => "department_id",
+                    "local_key" => "user_id",
+                ],
+                "subOrder" => [
+                    "order_by" => "departments.name",
+                    "order_dir" => "asc",
+                ],
+                'columns' => [
+                    'name' => [
+                        'searchable' => true,
+                        'orderable' => true,
+                    ]
+                ],
+            ],
+        ]
     ];
 
     /**
@@ -123,13 +120,13 @@ class User extends Authenticatable
         return $this->belongsTo(\App\WorkZone::class);
     }
 
-    public function roles()
+    public function departments()
     {
-        return $this->belongsToMany('App\Role', 'role_user', 'user_id', 'role_id');
+        return $this->belongsToMany(\App\Department::class, 'department_user', 'user_id', 'department_id');
     }
 
-    public function usernames()
+    public function telephoneNumbers()
     {
-        return $this->hasMany(\App\Username::class);
+        return $this->hasMany(\App\TelephoneNumber::class);
     }
 }

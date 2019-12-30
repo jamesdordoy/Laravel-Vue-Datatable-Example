@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUsernamesTable extends Migration
+class CreateDepartmentUserTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,12 @@ class CreateUsernamesTable extends Migration
      */
     public function up()
     {
-        Schema::create('usernames', function (Blueprint $table) {
+        Schema::create('department_user', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->bigInteger('department_id')->unsigned();
+            $table->foreign('department_id')->references('id')->on('departments'); 
             $table->bigInteger('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
-            $table->string("name");
             $table->timestamps();
         });
     }
@@ -29,6 +30,6 @@ class CreateUsernamesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('posts');
+        Schema::dropIfExists('role_user');
     }
 }

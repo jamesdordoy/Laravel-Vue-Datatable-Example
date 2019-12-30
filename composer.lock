@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "83bc5632a443a6b92fcf0bbd45de3209",
+    "content-hash": "2f459aff0c4722be3bb3119d17e203c5",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -813,17 +813,11 @@
         },
         {
             "name": "jamesdordoy/laravelvuedatatable",
-            "version": "1.3.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/jamesdordoy/Laravel-Vue-Datatable_Laravel-Package.git",
-                "reference": "d2e7206e6e66b808cf31f837d3ec5391f1671d2f"
-            },
+            "version": "dev-master",
             "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/jamesdordoy/Laravel-Vue-Datatable_Laravel-Package/zipball/d2e7206e6e66b808cf31f837d3ec5391f1671d2f",
-                "reference": "d2e7206e6e66b808cf31f837d3ec5391f1671d2f",
-                "shasum": ""
+                "type": "path",
+                "url": "../laravel-vue-datatable",
+                "reference": "d2e7206e6e66b808cf31f837d3ec5391f1671d2f"
             },
             "type": "library",
             "extra": {
@@ -841,14 +835,15 @@
                     "src/"
                 ]
             },
-            "notification-url": "https://packagist.org/downloads/",
             "authors": [
                 {
                     "name": "Home",
                     "email": "jamesdordoy@gmail.com"
                 }
             ],
-            "time": "2019-12-30T16:08:05+00:00"
+            "transport-options": {
+                "symlink": true
+            }
         },
         {
             "name": "laravel/framework",
@@ -5175,7 +5170,9 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "jamesdordoy/laravelvuedatatable": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

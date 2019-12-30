@@ -17,10 +17,10 @@ class UserController extends Controller
             $request->input('search'),
             [
                 "role",
+                "telephoneNumbers",
+                "departments"
             ]
         );
-
-        // dd($query->toSql());
 
         $isActive = $request->input('isActive');
         

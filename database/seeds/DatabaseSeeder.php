@@ -51,13 +51,12 @@ class DatabaseSeeder extends Seeder
         $workzones = factory(\App\WorkZone::class, 3)->create();
 
         $users = factory(\App\User::class, 50)->create([
-            'role_id' => \App\Role::all()->random()->id,
             'work_zone_id' => $workzones->random()->id,
         ])->each(function($user) {
-            factory(\App\Username::class, 2)->create([
+            factory(\App\TelephoneNumber::class, 2)->create([
                 'user_id'  => $user->id,
             ]);
-            factory(\App\Username::class, 2)->create([
+            factory(\App\TelephoneNumber::class, 2)->create([
                 'user_id' => \App\User::all()->random()->id,
             ]);
         });
@@ -67,15 +66,15 @@ class DatabaseSeeder extends Seeder
             $roleA = \App\Role::all()->random();
             $roleB = \App\Role::all()->random();
 
-            \DB::table('role_user')
+            \DB::table('department_user')
                 ->insert([
-                    'role_id' => $roleA->id,
+                    'department_id' => $roleA->id,
                     'user_id' => $item->id,
                 ]);
 
-            \DB::table('role_user')
+            \DB::table('department_user')
                 ->insert([
-                    'role_id' => $roleB->id,
+                    'department_id' => $roleB->id,
                     'user_id' => $item->id,
                 ]);
         });

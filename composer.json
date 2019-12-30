@@ -6,22 +6,13 @@
         "framework",
         "laravel"
     ],
-    "repositories": [
-        {
-            "type": "path",
-            "url": "../laravel-vue-datatable",
-            "options": {
-                "symlink": true
-            }
-        }
-    ],
     "license": "MIT",
     "require": {
         "php": "^7.1.3",
         "barryvdh/laravel-cors": "^0.11.3",
         "facade/ignition": "^1.4",
         "fideloper/proxy": "^4.0",
-        "jamesdordoy/laravelvuedatatable": "@dev",
+        "jamesdordoy/laravelvuedatatable": "^1.3.1",
         "laravel/framework": "6.0.*",
         "laravel/tinker": "^1.0"
     },

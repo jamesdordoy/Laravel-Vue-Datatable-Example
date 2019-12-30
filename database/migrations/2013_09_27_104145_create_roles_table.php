@@ -19,6 +19,7 @@ class CreateRolesTable extends Migration
             $table->foreign('department_id')->references('id')->on('departments'); 
             $table->string('name');
             $table->string('handle');
+            $table->string('manager');
             $table->timestamps();
         });
     }

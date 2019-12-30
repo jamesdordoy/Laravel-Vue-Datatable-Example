@@ -14,16 +14,21 @@ class UserController extends Controller
         $query = User::eloquentQuery(
             $request->input('column'),
             $request->input('dir'),
-            $request->input('search')
+            $request->input('search'),
+            [
+                "role",
+            ]
         );
 
-        $isAdmin = $request->input('isAdmin');
+        // dd($query->toSql());
+
+        $isActive = $request->input('isActive');
         
-        if (isset($isAdmin) && ! empty($isAdmin)) {
-            $query->where("type", $isAdmin);
+        if (isset($isActive)) {
+            $query->where("is_active", $isActive);
         }
         
-        $data = $query->with("role")->paginate($request->input('length'));
+        $data = $query->paginate($request->input('length'));
 
         return new DataTableCollectionResource($data);
     }
@@ -31,12 +36,12 @@ class UserController extends Controller
     public function queryBuilder(Request $request)
     {
         $searchValue = $request->input('search');
+        $orderBy = $request->input('column');
+        $orderBydir = $request->input("dir");
+        $length = $request->input('length');
 
-        $query = User::queryBuilderQuery(
-            $request->input('column'),
-            $request->input('dir'),
-            $searchValue
-        )->join('roles', 'roles.id', '=', 'users.role_id')
+        $data = \DB::table('users')
+            ->join('roles', 'roles.id', '=', 'users.role_id')
             ->join('departments', 'departments.id', '=', 'roles.department_id')
             ->select(
                 'roles.name as role_name',
@@ -46,16 +51,12 @@ class UserController extends Controller
                 'users.email',
                 'departments.name as department_name'
             )
+            ->where("users.name", "LIKE", "%$searchValue%")
+            ->orWhere('users.email', "LIKE", "%$searchValue%")
             ->orWhere('roles.name', "LIKE", "%$searchValue%")
-            ->orWhere('departments.name', "LIKE", "%$searchValue%");
-
-        $isAdmin = $request->input('isAdmin');
-        
-        if (isset($isAdmin) && ! empty($isAdmin)) {
-            $query->where("type", $isAdmin);
-        }
-        
-        $data = $query->paginate($request->input('length'));
+            ->orWhere('departments.name', "LIKE", "%$searchValue%")
+            ->orderBy($orderBy, $orderBydir)
+            ->paginate($length);
 
         return new DataTableCollectionResource($data);
     }
@@ -64,38 +65,5 @@ class UserController extends Controller
     {
         $searchValue = $request->input('search');
         return User::where("name", "like", "%$searchValue%")->get();
-    }
-
-    public function pivot(Request $request)
-    {
-        $searchValue = $request->input('search');
-        $orderBy = $request->input('column', 'id');
-        $orderByDir = $request->input('dir', 'asc');
-        $length = $request->input('length');
-
-        $query = User::eloquentQuery(
-            $orderBy,
-            $orderByDir,
-            $searchValue
-        );
-
-        if ($searchValue) {
-            $query = $query->whereHas('roles', function ($q) use ($searchValue) {
-                $q->orWhere('roles.name', "like",  "%$searchValue%");
-            });
-        }
-        
-        $data = $query->with('roles')->paginate($length);
-
-        return new DataTableCollectionResource($data);
-    }
-
-    public function checkForColumnNesting($column)
-    {
-        if (count(explode(".", $column)) > 1) {
-            return $column;
-        } else {
-            return $this->getTable() . ".$column";
-        }
     }
 }

@@ -16,14 +16,11 @@ Route::get('/eloquent', [
     'uses' => 'UserController@index',
 ]);
 
+Route::get('/eloquent/search', [
+    'uses' => 'UserController@search',
+]);
+
 Route::get('/query-builder', [
     'uses' => 'UserController@queryBuilder',
 ]);
 
-Route::get('/pivot', [
-    'uses' => 'UserController@pivot',
-]);
-
-Route::get('/eloquent/search', [
-    'uses' => 'UserController@search',
-]);

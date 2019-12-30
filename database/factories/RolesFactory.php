@@ -11,5 +11,6 @@ $factory->define(Role::class, function (Faker $faker) {
         // 'department_id' => factory(App\Department::class)->create()->id,
         'name' => $faker->randomElement(['User', 'Staff', 'Admin']),
         'handle' => $faker->randomElement(['user', 'staff', 'admin']),
+        'manager' => $faker->randomElement(['Jeff', 'Jane', 'Tim']),
     ];
 });

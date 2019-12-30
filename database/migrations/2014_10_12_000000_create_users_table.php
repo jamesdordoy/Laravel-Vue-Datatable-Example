@@ -17,6 +17,8 @@ class CreateUsersTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('role_id')->unsigned();
             $table->foreign('role_id')->references('id')->on('roles'); 
+            $table->bigInteger('work_zone_id')->unsigned();
+            $table->foreign('work_zone_id')->references('id')->on('work_zones'); 
             $table->string('name');
             $table->float('cost', 8, 2);
             $table->string('type');

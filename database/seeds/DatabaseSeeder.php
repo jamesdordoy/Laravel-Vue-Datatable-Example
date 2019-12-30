@@ -26,35 +26,56 @@ class DatabaseSeeder extends Seeder
             'handle' => 'management',
         ]);
 
+        $depA = \App\Department::all()->random();
+        $depB =\App\Department::all()->random();
+        $depC = \App\Department::all()->random();
+
         $user = factory(\App\Role::class)->create([
-            'department_id' => \App\Department::all()->random(),
+            'department_id' => $depA,
             'name' => 'User',
             'handle' => 'user',
         ]);
 
         $staff = factory(\App\Role::class)->create([
-            'department_id' => \App\Department::all()->random(),
+            'department_id' => $depB,
             'name' => 'Staff',
             'handle' => 'staff',
         ]);
 
         $admin = factory(\App\Role::class)->create([
-            'department_id' => \App\Department::all()->random(),
+            'department_id' => $depC,
             'name' => 'Admin',
             'handle' => 'admin',
         ]);
 
+        $workzones = factory(\App\WorkZone::class, 3)->create();
+
         $users = factory(\App\User::class, 50)->create([
-            'role_id' => \App\Role::all()->random(),
-        ]);
+            'role_id' => \App\Role::all()->random()->id,
+            'work_zone_id' => $workzones->random()->id,
+        ])->each(function($user) {
+            factory(\App\Username::class, 2)->create([
+                'user_id'  => $user->id,
+            ]);
+            factory(\App\Username::class, 2)->create([
+                'user_id' => \App\User::all()->random()->id,
+            ]);
+        });
 
         $users->each(function ($item, $key) {
 
-            $role = \App\Role::all()->random();
+            $roleA = \App\Role::all()->random();
+            $roleB = \App\Role::all()->random();
 
             \DB::table('role_user')
                 ->insert([
-                    'role_id' => $role->id,
+                    'role_id' => $roleA->id,
+                    'user_id' => $item->id,
+                ]);
+
+            \DB::table('role_user')
+                ->insert([
+                    'role_id' => $roleB->id,
                     'user_id' => $item->id,
                 ]);
         });

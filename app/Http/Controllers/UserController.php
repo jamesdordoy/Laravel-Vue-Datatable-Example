@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\User;
-use App\Role;
 use Illuminate\Http\Request;
 use JamesDordoy\LaravelVueDatatable\Http\Resources\DataTableCollectionResource;
 
@@ -21,6 +20,7 @@ class UserController extends Controller
                 "departments"
             ]
         );
+
 
         $isActive = $request->input('isActive');
         

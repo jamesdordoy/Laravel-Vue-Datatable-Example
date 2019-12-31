@@ -21,7 +21,6 @@ class UserController extends Controller
             ]
         );
 
-
         $isActive = $request->input('isActive');
         
         if (isset($isActive)) {

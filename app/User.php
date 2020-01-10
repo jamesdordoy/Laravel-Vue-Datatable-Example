@@ -12,55 +12,55 @@ class User extends Authenticatable
     use Notifiable, LaravelVueDatatableTrait;
 
     protected $dataTableColumns = [
-        'id' => [
-            'searchable' => true,
-            'orderable' => true,
+        "id" => [
+            "searchable" => true,
+            "orderable" => true,
         ],
-        'name' => [
-            'searchable' => true,
-            'orderable' => true,
+        "name" => [
+            "searchable" => true,
+            "orderable" => true,
         ],
-        'email' => [
-            'searchable' => true,
-            'orderable' => true,
+        "email" => [
+            "searchable" => true,
+            "orderable" => true,
         ],
-        'is_active' => [
-            'searchable' => true,
-            'orderable' => true,
+        "is_active" => [
+            "searchable" => true,
+            "orderable" => true,
         ],
-        'cost' => [
-            'searchable' => true,
-            'orderable' => true,
+        "cost" => [
+            "searchable" => true,
+            "orderable" => true,
         ],
     ];
 
     protected $dataTableRelationships = [
         "belongsTo" => [
-            'role' => [
+            "role" => [
                 "model" => \App\Role::class,
-                'foreign_key' => 'role_id',
-                'columns' => [
-                    'name' => [
-                        'searchable' => true,
-                        'orderable' => true,
+                "foreign_key" => "role_id",
+                "columns" => [
+                    "name" => [
+                        "searchable" => true,
+                        "orderable" => true,
                     ],
                 ],
             ],
         ],
         "hasMany" => [
-            'telephoneNumbers' => [
+            "telephoneNumbers" => [
                 "model" => \App\TelephoneNumber::class,
-                'foreign_key' => 'user_id',
-                'columns' => [
-                    'name' => [
-                        'searchable' => true,
-                        'orderable' => true,
+                "foreign_key" => "user_id",
+                "columns" => [
+                    "name" => [
+                        "searchable" => true,
+                        "orderable" => true,
                     ],
                 ],
             ],
         ],
         "belongsToMany" => [
-            'departments' => [
+            "departments" => [
                 "model" => \App\Department::class,
                 "foreign_key" => "role_id",
                 "pivot" => [
@@ -70,10 +70,10 @@ class User extends Authenticatable
                     "local_key" => "user_id",
                 ],
                 "order_by" => "name",
-                'columns' => [
-                    'name' => [
-                        'searchable' => true,
-                        'orderable' => true,
+                "columns" => [
+                    "name" => [
+                        "searchable" => true,
+                        "orderable" => true,
                     ]
                 ],
             ],
@@ -86,7 +86,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        "name", "email", "password",
     ];
 
     /**
@@ -95,7 +95,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        "password", "remember_token",
     ];
 
     /**
@@ -104,7 +104,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $casts = [
-        'email_verified_at' => 'datetime',
+        "email_verified_at" => "datetime",
     ];
 
     public function role()
@@ -119,7 +119,7 @@ class User extends Authenticatable
 
     public function departments()
     {
-        return $this->belongsToMany(\App\Department::class, 'department_user', 'user_id', 'department_id');
+        return $this->belongsToMany(\App\Department::class, "department_user", "user_id", "department_id");
     }
 
     public function telephoneNumbers()

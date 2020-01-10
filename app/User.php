@@ -69,10 +69,7 @@ class User extends Authenticatable
                     "foreign_key" => "department_id",
                     "local_key" => "user_id",
                 ],
-                "subOrder" => [
-                    "order_by" => "departments.name",
-                    "order_dir" => "asc",
-                ],
+                "order_by" => "name",
                 'columns' => [
                     'name' => [
                         'searchable' => true,

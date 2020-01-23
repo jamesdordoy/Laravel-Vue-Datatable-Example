@@ -12,7 +12,7 @@ class UserController extends Controller
     {
         $query = User::eloquentQuery(
             $request->input('column'),
-            $request->input('dir'),
+            $request->input('dir', 'asc'),
             $request->input('search'),
             [
                 "role",

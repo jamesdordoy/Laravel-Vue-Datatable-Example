@@ -16,8 +16,6 @@ class UserController extends Controller
             $request->input('search'),
             [
                 "role",
-                "telephoneNumbers",
-                "departments"
             ]
         );
 
@@ -38,24 +36,38 @@ class UserController extends Controller
         $orderBy = $request->input('column');
         $orderBydir = $request->input("dir");
         $length = $request->input('length');
+        $isActive = $request->input('isActive');
+        $roleId = $request->input('roleId');
 
-        $data = \DB::table('users')
+        $query = \DB::table('users')
             ->join('roles', 'roles.id', '=', 'users.role_id')
             ->join('departments', 'departments.id', '=', 'roles.department_id')
             ->select(
                 'roles.name as role_name',
                 'users.id',
                 'users.cost',
+                'users.is_active',
                 'users.name as user_name',
                 'users.email',
                 'departments.name as department_name'
             )
-            ->where("users.name", "LIKE", "%$searchValue%")
-            ->orWhere('users.email', "LIKE", "%$searchValue%")
-            ->orWhere('roles.name', "LIKE", "%$searchValue%")
-            ->orWhere('departments.name', "LIKE", "%$searchValue%")
-            ->orderBy($orderBy, $orderBydir)
-            ->paginate($length);
+            ->where(function ($query) use($searchValue) {
+                $query->where("users.name", "LIKE", "%$searchValue%")
+                    ->orWhere('users.email', "LIKE", "%$searchValue%")
+                    ->orWhere('roles.name', "LIKE", "%$searchValue%")
+                    ->orWhere('departments.name', "LIKE", "%$searchValue%");
+            })
+            ->orderBy($orderBy, $orderBydir);
+
+        if (isset($isActive) && ! empty($isActive)) {
+            $query = $query->where("users.is_active", $isActive);
+        }
+
+        if (isset($roleId) && ! empty($roleId)) {
+            $query = $query->where("users.role_id", $roleId);
+        }
+            
+        $data = $query->paginate($length);
 
         return new DataTableCollectionResource($data);
     }

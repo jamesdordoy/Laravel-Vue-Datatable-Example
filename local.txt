@@ -9,3 +9,5 @@
 ],
 
 "jamesdordoy/laravelvuedatatable": "@dev",
+
+file:../../Vue/Laravel-Vue-Datatable

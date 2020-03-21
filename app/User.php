@@ -47,6 +47,18 @@ class User extends Authenticatable
                 ],
             ],
         ],
+        // "hasOne" => [
+        //     "role" => [
+        //         "model" => \App\Role::class,
+        //         "foreign_key" => "role_id",
+        //         "columns" => [
+        //             "name" => [
+        //                 "searchable" => true,
+        //                 "orderable" => true,
+        //             ],
+        //         ],
+        //     ],
+        // ],
         "hasMany" => [
             "telephoneNumbers" => [
                 "model" => \App\TelephoneNumber::class,
@@ -77,7 +89,7 @@ class User extends Authenticatable
                     ]
                 ],
             ],
-        ]
+        ],
     ];
 
     /**

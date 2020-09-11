@@ -1,6 +1,11 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Database\Factories\UserFactory;
+use Database\Factories\DepartmentFactory;
+use Database\Factories\RoleFactory;
+use Database\Factories\WorkZoneFactory;
+use Database\Factories\PhoneNumberFactory;
 
 class DatabaseSeeder extends Seeder
 {
@@ -11,17 +16,17 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $customerService = factory(\App\Department::class)->create([
+        $customerService = DepartmentFactory::new()->create([
             'name' => 'Customer Service',
             'handle' => 'customer-service',
         ]);
 
-        $technology = factory(\App\Department::class)->create([
+        $technology = DepartmentFactory::new()->create([
             'name' => 'Technology',
             'handle' => 'technology',
         ]);
 
-        $management = factory(\App\Department::class)->create([
+        $management = DepartmentFactory::new()->create([
             'name' => 'Management',
             'handle' => 'management',
         ]);
@@ -30,33 +35,41 @@ class DatabaseSeeder extends Seeder
         $depB =\App\Department::all()->random();
         $depC = \App\Department::all()->random();
 
-        $user = factory(\App\Role::class)->create([
+        $user = RoleFactory::new()->create([
             'department_id' => $depA,
             'name' => 'User',
             'handle' => 'user',
         ]);
 
-        $staff = factory(\App\Role::class)->create([
+        $staff = RoleFactory::new()->create([
             'department_id' => $depB,
-            'name' => 'Staff',
-            'handle' => 'staff',
+            'name' => 'User',
+            'handle' => 'user',
         ]);
 
-        $admin = factory(\App\Role::class)->create([
+        $admin = RoleFactory::new()->create([
             'department_id' => $depC,
-            'name' => 'Admin',
-            'handle' => 'admin',
+            'name' => 'User',
+            'handle' => 'user',
         ]);
 
-        $workzones = factory(\App\WorkZone::class, 3)->create();
+        $workzones = WorkZoneFactory::new()->count(3)->create();
 
-        $users = factory(\App\User::class, 50)->create([
+        $me = UserFactory::new()->create([
+            'work_zone_id' => $workzones->random()->id,
+            "email" => "jamesdordoy@gmail.com",
+            "name" => "James",
+            "password" => \Hash::make("password"),
+        ]);
+
+        $users = UserFactory::new()->count(200)->create([
             'work_zone_id' => $workzones->random()->id,
         ])->each(function($user) {
-            factory(\App\TelephoneNumber::class, 2)->create([
+            PhoneNumberFactory::new()->count(2)->create([
                 'user_id'  => $user->id,
             ]);
-            factory(\App\TelephoneNumber::class, 2)->create([
+
+            PhoneNumberFactory::new()->count(2)->create([
                 'user_id' => \App\User::all()->random()->id,
             ]);
         });

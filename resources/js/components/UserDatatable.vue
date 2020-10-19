@@ -18,25 +18,27 @@
                 Reload
             </button>
 
-            <data-table
+            <!-- <data-table
                 ref="queryBuild"
                 url="/api/query-builder"
                 :columns="columns">
-            </data-table>
+            </data-table> -->
         </div>
         <div>
             <h1>Local Data</h1>
-            <data-table
+            <!-- <data-table
                 ref="userTable"
                 :data="data"
                 :columns="columns"
                 @onTablePropsChanged="reloadLocalTable">
-            </data-table>
+            </data-table> -->
         </div>
     </div>
 </template>
 
 <script>
+
+
     export default {
         name: 'app',
         methods: {

@@ -31,6 +31,13 @@
       0 => 'JamesDordoy\\LaravelVueDatatable\\Providers\\LaravelVueDatatableServiceProvider',
     ),
   ),
+  'laravel/sail' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Laravel\\Sail\\SailServiceProvider',
+    ),
+  ),
   'laravel/tinker' => 
   array (
     'providers' => 

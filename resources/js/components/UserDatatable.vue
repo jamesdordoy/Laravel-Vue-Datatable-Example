@@ -18,29 +18,36 @@
                 Reload
             </button>
 
-            <!-- <data-table
+            <data-table
                 ref="queryBuild"
                 url="/api/query-builder"
                 :columns="columns">
-            </data-table> -->
+            </data-table>
         </div>
         <div>
             <h1>Local Data</h1>
-            <!-- <data-table
+            <data-table
                 ref="userTable"
                 :data="data"
                 :columns="columns"
                 @onTablePropsChanged="reloadLocalTable">
-            </data-table> -->
+            </data-table>
         </div>
     </div>
 </template>
 
+
 <script>
+    import ExampleButton from './ExampleButton.vue';
+    import ExampleImageComponent from './ExampleImageComponent.vue';
 
 
     export default {
         name: 'app',
+        components: {
+            ExampleButton,
+            ExampleImageComponent
+        },
         methods: {
             reloadTableEloquent() {
                 this.$refs.eloquent.getData()
@@ -61,7 +68,10 @@
                 .catch(error => {
 
                 });
-            }
+            },
+            displayRow(data) {
+                alert("You clicked row"+data.id);
+            },
         },
         created() {
             this.getData();
@@ -109,6 +119,25 @@
                         width: 30,
                         orderable: true,
                     },
+                    {
+                        label: 'Profile Image',
+                        name: 'img',
+                        orderable: false,
+                        component: ExampleImageComponent,
+                    },
+                    {
+                        label: '',
+                        name: 'View',
+                        orderable: false,
+                        classes: { 
+                            'btn': true,
+                            'btn-primary': true,
+                            'btn-sm': true,
+                        },
+                        event: "click",
+                        handler: this.displayRow,
+                        component: ExampleButton, 
+                    }         
                 ],
                 columns: [
                     {
@@ -143,6 +172,25 @@
                         width: 30,
                         orderable: true,
                     },
+                    {
+                        label: 'Profile Image',
+                        name: 'img',
+                        orderable: false,
+                        component: ExampleImageComponent,
+                    },
+                    {
+                        label: '',
+                        name: 'View',
+                        orderable: false,
+                        classes: { 
+                            'btn': true,
+                            'btn-primary': true,
+                            'btn-sm': true,
+                        },
+                        event: "click",
+                        handler: this.displayRow,
+                        component: ExampleButton, 
+                    }         
                 ]
             }
         },

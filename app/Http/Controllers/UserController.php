@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use JamesDordoy\LaravelVueDatatable\Http\Resources\DataTableCollectionResource;
 
 class UserController extends Controller
@@ -34,15 +35,13 @@ class UserController extends Controller
     {
         $searchValue = $request->input('search');
         $orderBy = $request->input('column');
-        $orderBydir = $request->input("dir");
-        $length = $request->input('length');
+        $orderBydir = $request->input("dir", "asc");
         $isActive = $request->input('isActive');
         $roleId = $request->input('roleId');
 
-        $query = \DB::table('users')
-            ->join('roles', 'roles.id', '=', 'users.role_id')
-            ->join('departments', 'departments.id', '=', 'roles.department_id')
-            ->select(
+        $query = User::join('roles', 'roles.id', '=', 'users.role_id')
+                ->join('departments', 'departments.id', '=', 'roles.department_id')
+                ->select(
                 'roles.name as role_name',
                 'users.id',
                 'users.cost',
@@ -66,8 +65,8 @@ class UserController extends Controller
         if (isset($roleId) && ! empty($roleId)) {
             $query = $query->where("users.role_id", $roleId);
         }
-            
-        $data = $query->paginate($length);
+          
+        $data = $query->paginate($request->input('length'));
 
         return new DataTableCollectionResource($data);
     }
